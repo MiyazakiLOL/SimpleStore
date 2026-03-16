@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'cart_item.dart';
+import 'product_model.dart';
 
 class CartProvider with ChangeNotifier {
   final List<CartItem> _items = [
@@ -23,7 +24,7 @@ class CartProvider with ChangeNotifier {
     CartItem(id: '13', name: 'Sạc dự phòng 20k mAh', attr: 'Đen', price: 50.0, imageUrl: 'https://picsum.photos/id/12/200'),
     CartItem(id: '14', name: 'Bàn phím cơ Logi', attr: 'RGB', price: 120.0, imageUrl: 'https://picsum.photos/id/13/200'),
     CartItem(id: '15', name: 'Chuột Magic Mouse', attr: 'Trắng', price: 79.0, imageUrl: 'https://picsum.photos/id/14/200'),
-    
+
     // --- NHÓM GIẢI TRÍ ---
     CartItem(id: '16', name: 'PlayStation 5', attr: 'Standard', price: 499.0, imageUrl: 'https://picsum.photos/id/15/200'),
     CartItem(id: '17', name: 'Nintendo Switch Oled', attr: 'Neon', price: 350.0, imageUrl: 'https://picsum.photos/id/16/200'),
@@ -74,6 +75,22 @@ class CartProvider with ChangeNotifier {
 
   void removeItem(String id) {
     _items.removeWhere((item) => item.id == id);
+    notifyListeners();
+  }
+
+  void addToCart(Product product) {
+    final index = _items.indexWhere((item) => item.id == product.id);
+    if (index != -1) {
+      _items[index].quantity += 1;
+    } else {
+      _items.add(CartItem(
+        id: product.id,
+        name: product.name,
+        attr: 'Mặc định',
+        price: product.price,
+        imageUrl: product.imageUrl,
+      ));
+    }
     notifyListeners();
   }
 }
