@@ -33,7 +33,7 @@ class CartScreen extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 20),
                   child: const Icon(Icons.delete_outline, color: Colors.white, size: 30),
                 ),
-                onDismissed: (_) => cart.removeItem(item.id),
+                onDismissed: (_) => cart.removeItem(item.id, item.attr),
                 child: Card(
                   margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
@@ -44,7 +44,7 @@ class CartScreen extends StatelessWidget {
                         Checkbox(
                           value: item.isSelected, 
                           activeColor: Colors.orange, 
-                          onChanged: (_) => cart.toggleItem(item.id)
+                          onChanged: (_) => cart.toggleItem(item.id, item.attr)
                         ),
                         ClipRRect(
                           borderRadius: BorderRadius.circular(8),
@@ -77,9 +77,9 @@ class CartScreen extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        IconButton(icon: const Icon(Icons.remove_circle_outline, size: 20), onPressed: () => cart.updateQuantity(item.id, -1)),
+        IconButton(icon: const Icon(Icons.remove_circle_outline, size: 20), onPressed: () => cart.updateQuantity(item.id, item.attr, -1)),
         Text("${item.quantity}", style: const TextStyle(fontWeight: FontWeight.bold)),
-        IconButton(icon: const Icon(Icons.add_circle_outline, color: Colors.blue, size: 20), onPressed: () => cart.updateQuantity(item.id, 1)),
+        IconButton(icon: const Icon(Icons.add_circle_outline, color: Colors.blue, size: 20), onPressed: () => cart.updateQuantity(item.id, item.attr, 1)),
       ],
     );
   }

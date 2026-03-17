@@ -5,7 +5,7 @@ import 'product_model.dart';
 import 'category_model.dart';
 import 'cart_provider.dart';
 import 'cart_screen.dart';
-
+import 'product_detail_screen.dart';
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -155,26 +155,53 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             title: const Text('TECH STORE', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white, letterSpacing: 1.5)),
             actions: [
-              Stack(
-                alignment: Alignment.center,
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.shopping_cart_outlined, color: Colors.white, size: 28),
-                    onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const CartScreen())),
-                  ),
-                  if (cart.items.isNotEmpty)
-                    Positioned(
-                      right: 6,
-                      top: 6,
-                      child: Container(
-                        padding: const EdgeInsets.all(4),
-                        decoration: const BoxDecoration(color: Colors.red, shape: BoxShape.circle),
-                        constraints: const BoxConstraints(minWidth: 18, minHeight: 18),
-                        child: Text('${cart.items.length}', style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold), textAlign: TextAlign.center),
-                      ),
-                    ),
-                ],
+              Consumer<CartProvider>(
+  builder: (context, cart, child) {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        IconButton(
+          icon: const Icon(
+            Icons.shopping_cart_outlined,
+            color: Colors.white,
+            size: 28,
+          ),
+          onPressed: () => Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (_) => const CartScreen(),
+            ),
+          ),
+        ),
+
+        if (cart.items.isNotEmpty)
+          Positioned(
+            right: 6,
+            top: 6,
+            child: Container(
+              padding: const EdgeInsets.all(4),
+              decoration: const BoxDecoration(
+                color: Colors.red,
+                shape: BoxShape.circle,
               ),
+              constraints: const BoxConstraints(
+                minWidth: 18,
+                minHeight: 18,
+              ),
+              child: Text(
+                '${cart.items.length}',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+      ],
+    );
+  },
+),
               const SizedBox(width: 8),
             ],
           ),
@@ -290,7 +317,16 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildProductCard(BuildContext context, Product product, CartProvider cart) {
-    return Card(
+  return GestureDetector(
+    onTap: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => ProductDetailScreen(product: product),
+        ),
+      );
+    },
+    child: Card(
       color: Colors.grey[900],
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
@@ -301,15 +337,32 @@ class _HomeScreenState extends State<HomeScreen> {
           Expanded(
             child: Stack(
               children: [
-                Image.network(product.imageUrl, fit: BoxFit.cover, width: double.infinity),
+                Hero(
+                  tag: product.id,
+                  child: Image.network(
+                    product.imageUrl,
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                  ),
+                ),
                 if (product.tag.isNotEmpty)
                   Positioned(
                     top: 10,
                     left: 10,
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                      decoration: BoxDecoration(color: Colors.red, borderRadius: BorderRadius.circular(5)),
-                      child: Text(product.tag, style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold)),
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Text(
+                        product.tag,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                   ),
               ],
@@ -320,28 +373,46 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(product.name, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w500, fontSize: 14), maxLines: 1, overflow: TextOverflow.ellipsis),
+                Text(
+                  product.name,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
                 const SizedBox(height: 6),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('\$${product.price}', style: const TextStyle(color: Colors.orange, fontWeight: FontWeight.bold, fontSize: 16)),
-                    Text('Bán ${product.sold}', style: const TextStyle(color: Colors.grey, fontSize: 10)),
+                    Text(
+                      '\$${product.price}',
+                      style: const TextStyle(
+                        color: Colors.orange,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                    Text(
+                      'Bán ${product.sold}',
+                      style: const TextStyle(color: Colors.grey, fontSize: 10),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 10),
+
+                // 🔥 BUTTON GIỜ CHỈ ĐI QUA MÀN 2
                 SizedBox(
                   width: double.infinity,
                   height: 35,
                   child: ElevatedButton(
                     onPressed: () {
-                      cart.addToCart(product);
-                      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Đã thêm ${product.name} vào giỏ'),
-                          duration: const Duration(seconds: 1),
-                          backgroundColor: Colors.orange,
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => ProductDetailScreen(product: product),
                         ),
                       );
                     },
@@ -350,9 +421,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       foregroundColor: Colors.orange,
                       elevation: 0,
                       padding: EdgeInsets.zero,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8), side: const BorderSide(color: Colors.orange, width: 0.5)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        side: const BorderSide(color: Colors.orange, width: 0.5),
+                      ),
                     ),
-                    child: const Text('Thêm vào giỏ', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                    child: const Text(
+                      'Xem chi tiết',
+                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ),
               ],
@@ -360,6 +437,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-    );
-  }
+    ),
+  );
+}
 }
