@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'cart_provider.dart';
-import 'home_screen.dart';
+import 'providers/cart_provider.dart';
+import 'providers/order_store.dart';
+import 'screens/home_screen.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => CartProvider()),
+        Provider<OrderStore>(create: (_) => OrderStore.instance),
       ],
       child: const ProductWebApp(),
     ),
