@@ -35,7 +35,7 @@ Simple Store là một ứng dụng mua sắm trực tuyến hiện đại, mư�
 
 1.  **Clone repository**:
     ```bash
-    git clone https://github.com/your-username/SimpleStore.git
+    git clone https://github.com/MiyazakiLOL/SimpleStore.git
     ```
 2.  **Di chuyển vào thư mục dự án**:
     ```bash
