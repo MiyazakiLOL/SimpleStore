@@ -79,6 +79,58 @@ class _OrderCard extends StatelessWidget {
 
   const _OrderCard({required this.order});
 
+  void _handleCancelOrder(BuildContext context) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Xác nhận hủy đơn'),
+        content: const Text('Bạn có chắc chắn muốn hủy đơn hàng này không?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Không'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('Hủy đơn', style: TextStyle(color: Colors.red)),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed == true) {
+      OrderStore.instance.updateStatus(order.id, OrderStatus.canceled);
+      
+      if (!context.mounted) return;
+      
+      showModalBottomSheet(
+        context: context,
+        builder: (context) => Container(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(Icons.check_circle_outline, color: Colors.green, size: 64),
+              const SizedBox(height: 16),
+              const Text(
+                'Hủy đơn hàng thành công',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 24),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('Đóng'),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final created = _formatDateTime(order.createdAt);
@@ -136,6 +188,23 @@ class _OrderCard extends StatelessWidget {
                 ),
               ],
             ),
+            if (order.status == OrderStatus.pending) ...[
+              const SizedBox(height: 12),
+              Align(
+                alignment: Alignment.centerRight,
+                child: OutlinedButton(
+                  onPressed: () => _handleCancelOrder(context),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: Colors.red,
+                    side: const BorderSide(color: Colors.red),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  child: const Text('Hủy đơn hàng'),
+                ),
+              ),
+            ],
           ],
         ),
       ),

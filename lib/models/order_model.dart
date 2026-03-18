@@ -90,5 +90,6 @@ class OrderModel {
       status: status,
       createdAt: createdAt,
     );
+
   }
 }

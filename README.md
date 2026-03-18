@@ -1,57 +1,53 @@
-# Simple Store - Flutter E-commerce App
-
-**Simple Store** là một ứng dụng mua sắm trực tuyến hiện đại được xây dựng bằng Flutter. Ứng dụng tích hợp **FakeStore API** để cung cấp dữ liệu thực tế, kết hợp với các kỹ thuật tối ưu hóa hiệu suất và trải nghiệm người dùng như phân trang (pagination) và quản lý trạng thái tập trung.
-
-## 🚀 Tính năng chính
-
-- **Dữ liệu Sản phẩm Thực tế**: Tích hợp [FakeStore API](https://fakestoreapi.com/) để lấy danh sách sản phẩm.
-- **Giao diện Hiện đại (Material 3)**: Thiết kế với tông màu tối (Dark Mode) sang trọng, sử dụng linh hoạt các thành phần của Material 3.
-- **Banner Khuyến mãi**: Hệ thống banner tự động chạy (Auto-play Carousel) sử dụng `PageView` và `Timer`.
-- **Tìm kiếm & Lọc thông minh**:
-    - Tìm kiếm sản phẩm theo tên thời gian thực.
-    - Lọc sản phẩm theo danh mục (Electronics, Jewelery, Men's Clothing, Women's Clothing).
-- **Tối ưu hóa Cuộn (Infinite Scrolling)**: Tự động tải thêm dữ liệu khi người dùng cuộn xuống cuối trang (Pagination), giúp ứng dụng hoạt động mượt mà.
-- **Quản lý Giỏ hàng**: 
-    - Thêm/Xóa sản phẩm, cập nhật số lượng.
-    - Quản lý trạng thái bằng `Provider`.
-    - Dữ liệu được lưu trữ bền vững qua `SharedPreferences`.
-- **Thanh toán & Đơn hàng**:
-    - Quy trình Checkout đơn giản.
-    - Theo dõi lịch sử đơn hàng với các trạng thái (Pending, Shipping, Delivered).
-    - Sử dụng `ValueNotifier` trong `OrderStore` để cập nhật trạng thái đơn hàng tức thì.
-
-## 🛠 Công nghệ sử dụng
-
-- **Flutter & Dart**: Framework phát triển ứng dụng di động.
-- **Provider**: Quản lý trạng thái giỏ hàng.
-- **ValueNotifier & Singleton Pattern**: Quản lý và lưu trữ dữ liệu đơn hàng.
-- **Http**: Kết nối REST API.
-- **Shared Preferences**: Lưu trữ dữ liệu cục bộ (Local Storage).
-
-## 📂 Cấu trúc dự án
-
-```text
-lib/
-├── models/         # Chứa các model dữ liệu (Product, Category, Order,...)
-├── providers/      # Quản lý trạng thái (CartProvider, OrderStore)
-├── screens/        # Các màn hình (Home, Cart, Detail, Order History, Checkout)
-└── main.dart       # Điểm khởi chạy ứng dụng
-```
-
-## 📦 Cài đặt và Chạy ứng dụng
-
-1. **Clone repository:**
-   ```bash
-   git clone https://github.com/your-username/SimpleStore.git
-   ```
-2. **Cài đặt dependencies:**
-   ```bash
-   flutter pub get
-   ```
-3. **Chạy ứng dụng:**
-   ```bash
-   flutter run
-   ```
-
----
-*Dự án được thực hiện bởi: **TH4 - Nhóm G3_C4***
+Simple Store - Flutter E-commerce App
+Simple Store là một ứng dụng mua sắm trực tuyến hiện đại, mượt mà và đầy đủ tính năng, được xây dựng bằng Flutter. Ứng dụng sử dụng FakeStore API để cung cấp dữ liệu sản phẩm thực tế và tích hợp các kỹ thuật tối ưu hóa trải nghiệm người dùng tiên tiến.
+🚀 Tính năng chính
+•
+Dữ liệu sản phẩm thực tế: Tích hợp FakeStore API để lấy danh sách sản phẩm đa dạng.
+•
+Pull to Refresh: Vuốt từ trên xuống để làm mới danh sách sản phẩm.
+•
+Infinite Scrolling (Pagination): Tự động tải thêm sản phẩm khi cuộn xuống cuối trang, giúp ứng dụng hoạt động mượt mà với lượng dữ liệu lớn.
+•
+Tìm kiếm & Lọc:
+•
+Tìm kiếm sản phẩm theo tên thời gian thực.
+•
+Lọc sản phẩm theo danh mục (Electronics, Jewelery, Men's Clothing, Women's Clothing).
+•
+Quản lý Giỏ hàng:
+•
+Thêm sản phẩm vào giỏ hàng với các thuộc tính tùy chọn.
+•
+Cập nhật số lượng, xóa sản phẩm hoặc chọn nhiều sản phẩm để thanh toán.
+•
+Tự động lưu giỏ hàng vào bộ nhớ máy (SharedPreferences).
+•
+Thanh toán (Checkout): Quy trình đặt hàng đơn giản với các tùy chọn phương thức thanh toán (COD, Momo).
+•
+Lịch sử Đơn hàng: Xem danh sách các đơn hàng đã đặt và trạng thái của chúng.
+•
+Giao diện hiện đại: Sử dụng Material 3, hỗ trợ chế độ tối (Dark mode) mặc định và các hiệu ứng chuyển cảnh mượt mà.
+🛠 Công nghệ sử dụng
+•
+Flutter & Dart: Framework chính.
+•
+Provider: Quản lý trạng thái (State Management).
+•
+Http: Kết nối và lấy dữ liệu từ REST API.
+•
+Shared Preferences: Lưu trữ dữ liệu cục bộ dưới dạng key-value.
+•
+Material 3: Ngôn ngữ thiết kế giao diện mới nhất.
+📦 Cài đặt
+1.
+Clone repository:
+git clone https://github.com/your-username/SimpleStore.git
+2.
+Di chuyển vào thư mục dự án:
+cd SimpleStore
+3.
+Cài đặt các thư viện:
+flutter pub get
+4.
+Chạy ứng dụng:
+flutter run
