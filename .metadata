@@ -18,6 +18,7 @@ migration:
     - platform: android
       create_revision: 3b62efc2a3da49882f43c372e0bc53daef7295a6
       base_revision: 3b62efc2a3da49882f43c372e0bc53daef7295a6
+<<<<<<< HEAD
     - platform: ios
       create_revision: 3b62efc2a3da49882f43c372e0bc53daef7295a6
       base_revision: 3b62efc2a3da49882f43c372e0bc53daef7295a6
@@ -33,6 +34,8 @@ migration:
     - platform: windows
       create_revision: 3b62efc2a3da49882f43c372e0bc53daef7295a6
       base_revision: 3b62efc2a3da49882f43c372e0bc53daef7295a6
+=======
+>>>>>>> hiep
 
   # User provided section
 
