@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import '../models/cart_item.dart';
 import '../models/product_model.dart';
 import '../providers/cart_provider.dart';
+import 'cart_screen.dart';
+import 'chat_screen.dart';
 import 'checkout_screen.dart';
 
 class ProductDetailScreen extends StatefulWidget {
@@ -30,6 +32,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       appBar: AppBar(
         title: Text(widget.product.name),
         backgroundColor: Colors.black,
+        foregroundColor: Colors.white,
       ),
       body: Column(
         children: [
@@ -232,11 +235,23 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 Row(
                   children: [
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => ChatScreen(
+                              productName: widget.product.name,
+                            ),
+                          ),
+                        );
+                      },
                       icon: const Icon(Icons.chat, color: Colors.white),
                     ),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (_) => const CartScreen()),
+                        );
+                      },
                       icon: const Icon(
                         Icons.shopping_cart,
                         color: Colors.white,
